@@ -12,12 +12,13 @@ namespace Sync.Helper
         {
             if (!destination.Exists)
             {
-                if (CurrentMode.Mode == Mode.DryRun)
+                if (CurrentMode.TransferMode == Mode.DryRun)
                 {
-                    Console.WriteLine("{0} does not exist", destination.FullName);
+                    Log.log("{0} does not exist", destination.FullName);
                 }
                 return false;
             }
+
             if (CurrentMode.CompareMode == Mode.Ignore_File_Size)
             {
                 return true;
@@ -25,9 +26,9 @@ namespace Sync.Helper
 
             if (source.Length != destination.Length)
             {
-                if (CurrentMode.Mode == Mode.DryRun)
+                if (CurrentMode.TransferMode == Mode.DryRun)
                 {
-                    Console.WriteLine("{0} have different size: {1} - {2}", source.FullName, source.Length, destination.Length);
+                    Log.trace("{0} have different size: {1} - {2}", source.FullName, source.Length, destination.Length);
                 }
                 return false;
             }

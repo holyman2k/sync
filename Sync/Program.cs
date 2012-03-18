@@ -12,41 +12,27 @@ namespace Sync
 
         static void Main(string[] args)
         {
+            Program app = new Program();
             Console.OutputEncoding = Encoding.UTF8;
             if ( !(args.Length > 1) )
             {
                 Console.WriteLine(@"Usage: Sync [-d -s] 'source path' 'destination path'");
                 Console.WriteLine(@"-d: dry run output copy be copied and reason for copy");
                 Console.WriteLine(@"-s: ignore file file when syncing");
+                Console.WriteLine(@"-v: show detailed log");
                 return;
             }
-            CurrentMode.Mode = Mode.Normal;
-            CurrentMode.CompareMode = Mode.Normal;
 
             int offset = 0;
-            if (args[offset].ToLower() == "-d")
+            
+            while (args[offset].StartsWith("-"))
             {
-                CurrentMode.Mode = Mode.DryRun;
-                offset = offset + 1;
-            }
-            if (args[offset].ToLower() == "-s")
-            {
-                CurrentMode.CompareMode = Mode.Ignore_File_Size;
-                offset = offset + 1;
+                app.processOptions(args[offset]);
+                offset++;
             }
 
             DirectoryInfo source = new DirectoryInfo(args[offset]);
             DirectoryInfo destination = new DirectoryInfo(args[offset + 1]);
-
-            //Console.WriteLine("{0}, {1}", source.FullName, destination.FullName);
-
-            /*string src = @"D:\tmp\src";
-            string dest = @"D:\tmp\dest";
-
-            DirectoryInfo source = new DirectoryInfo(src);
-            DirectoryInfo destination = new DirectoryInfo(dest);*/
-
-            Program app = new Program();
             app.init();
             app.sync(source, destination);
         }
@@ -63,10 +49,26 @@ namespace Sync
 
             if (!folderSource.exists())
             {
-                Console.WriteLine("source folder {0} does not exist", source.FullName);
+                Log.log("source folder {0} does not exist", source.FullName);
                 return;
             }
             folderSource.sync(folderDestination, comparer);
+        }
+
+        public void processOptions(string option)
+        {
+            if (option.ToLower() == "-d")
+            {
+                CurrentMode.TransferMode = Mode.DryRun;
+            }
+            else if (option.ToLower() == "-s")
+            {
+                CurrentMode.CompareMode = Mode.Ignore_File_Size;
+            }
+            else if (option.ToLower() == "-v")
+            {
+                CurrentMode.LogMode = Mode.Verbose;
+            }
         }
     }
 }

@@ -10,6 +10,8 @@ namespace Sync.Model
     {
         public string path { get; private set; }
 
+        public FileCopy fileCopy;
+
         public Folder(string path)
         {
             this.path = path;
@@ -36,7 +38,7 @@ namespace Sync.Model
             DirectoryInfo folder = new DirectoryInfo(path);
             if ((folder.Attributes & FileAttributes.Hidden) == FileAttributes.Hidden)
             {
-                //Console.WriteLine("folder {0} is hidden", folder.FullName);
+                Log.trace("folder {0} is hidden", folder.FullName);
                 return;
             }
             folder.Refresh();
@@ -49,19 +51,19 @@ namespace Sync.Model
             {
                 if ((file.Attributes & FileAttributes.Hidden)== FileAttributes.Hidden)
                 {
-                    //Console.WriteLine("{0} is hidden", file.FullName);
+                    Log.trace("{0} is hidden", file.FullName);
                     continue;
-                    }
+                }
                 FileInfo destFile = destination.findFile(file.Name);
                 if (comparer.match(file, destFile))
                 {
-                    if (CurrentMode.Mode == Mode.Normal)
+                    if (CurrentMode.TransferMode == Mode.Normal)
                     {
-                        Console.WriteLine(file.FullName + " ===> " + destFile.FullName + " === exist");
+                        Log.trace("{0} ===> {1} === exist", file.FullName, destFile.FullName);
                     }
                     continue ;
                 }
-                copyFile(file, destFile);
+                fileCopy.copy(file, destFile);
             }
 
             foreach (DirectoryInfo child in folder.GetDirectories())
@@ -77,20 +79,6 @@ namespace Sync.Model
         {
             DirectoryInfo folder = new DirectoryInfo(path);
             folder.Refresh();
-        }
-
-        private bool copyFile(FileInfo source, FileInfo destination)
-        {
-            Console.WriteLine(source.FullName + " ===> " + destination.FullName + " === copy");
-            if (CurrentMode.Mode == Mode.Normal)
-            {
-                FileInfo result = source.CopyTo(destination.FullName, true);
-                return result.Exists;
-            }
-            else
-            {
-                return true;
-            }
         }
 
         public bool exists()

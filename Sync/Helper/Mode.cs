@@ -7,8 +7,9 @@ namespace Sync.Helper
 {
     enum Mode
     {
-        DryRun = 0,
-        Normal = 1,
-        Ignore_File_Size = 2
+        DryRun,
+        Normal,
+        Ignore_File_Size,
+        Verbose,
     }
 }
