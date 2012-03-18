@@ -1,0 +1,12 @@
+d:\my documents\visual studio 2010\Projects\Sync\Sync\bin\Debug\Sync.exe
+d:\my documents\visual studio 2010\Projects\Sync\Sync\bin\Debug\Sync.pdb
+d:\my documents\visual studio 2010\Projects\Sync\Sync\obj\x86\Debug\ResolveAssemblyReference.cache
+d:\my documents\visual studio 2010\Projects\Sync\Sync\obj\x86\Debug\Sync.exe
+d:\my documents\visual studio 2010\Projects\Sync\Sync\obj\x86\Debug\Sync.pdb
+d:\my documents\visual studio 2010\Projects\Sync\Sync\bin\Debug\Sync.exe.config
+D:\workspace\Sync\Sync\bin\Debug\Sync.exe.config
+D:\workspace\Sync\Sync\obj\x86\Debug\Sync.exe
+D:\workspace\Sync\Sync\obj\x86\Debug\Sync.pdb
+D:\workspace\Sync\Sync\bin\Debug\Sync.exe
+D:\workspace\Sync\Sync\bin\Debug\Sync.pdb
+D:\workspace\Sync\Sync\obj\x86\Debug\ResolveAssemblyReference.cache
